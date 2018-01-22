@@ -15,6 +15,8 @@ class RaftServerImpl extends RaftServer {
   private[raft] var stateRepository: StateRepository = null
   private var raftGateway: RaftGateway = null
 
+
+
   def this(serverId: Long, peerIds: List[Long], stateRepository: StateRepository, raftGateway: RaftGateway) {
     this()
     this.serverId = serverId
@@ -53,7 +55,7 @@ class RaftServerImpl extends RaftServer {
 
   private def notifyPeers(): Unit = {
     for (peer <- peerIds) {
-      raftGateway.appendEntries(peer, new AppendEntry(term, serverId, previousLogIndex, previousLogTerm, Collections.emptyList(), commitIndex))
+      raftGateway.appendEntries(peer, new AppendEntry(term, serverId, previousLogIndex, previousLogTerm, List(), commitIndex))
     }
   }
 
